@@ -55,18 +55,19 @@ public class LogAnalyzer
         int i = 0;
         while(reader.hasNext()) {
             i++;
-            System.out.println("line " + i);
+            System.out.println("Reading line " + i);
             LogEntry entry = reader.next();
             int hour = entry.getHour();
             int day = entry.getDay();
             int month = entry.getMonth();
-            System.out.println("month : " + month);
             int year = entry.getYear();
+            System.out.println("Y " + year + ", M " + month + ", D " + day + ", H " + hour);
             hourCounts[hour]++;
             dayCounts[day]++;
             monthCounts[month]++;
             yearCounts[year]++;
         }
+        System.out.println("File read finished!");
     }
     
     public void numberOfAccesses()
@@ -125,6 +126,92 @@ public class LogAnalyzer
             }
         }
         System.out.println("The quietest hour is " + minhour + " with " + min + " accesses.");
+    }
+    
+    public void quietestDay()
+    {
+        int min = dayCounts[0];
+        int minday = 0;
+        for(int day = 1; day < dayCounts.length; day++) {
+            //System.out.println("Day : " + day + ", Value : " + dayCounts[day]);
+            if(dayCounts[day] < min)
+            {
+                min = dayCounts[day];                
+                minday = day;
+                //System.out.println("Min changed");
+            }
+        }
+        System.out.println("The quietest day is " + minday + " with " + min + " accesses.");
+    }
+    
+    public void busiestDay()
+    {
+        int max = dayCounts[0];
+        int maxday = 0;
+        for(int day = 1; day < dayCounts.length; day++) {
+            //System.out.println("Day : " + day + ", Value : " + dayCounts[day]);
+            if(dayCounts[day] > max)
+            {
+                max = dayCounts[day];                
+                maxday = day;
+                //System.out.println("Max changed");
+            }
+        }
+        System.out.println("The buisest day is " + maxday + " with " + max + " accesses.");
+    }
+    
+    public void totalAccessesPerMonth()
+    {
+        System.out.println("Month : Count");
+        for(int month = 1; month < monthCounts.length; month++) {
+            System.out.println(month + ": " + monthCounts[month]);
+        }
+    }
+    
+    public void averageAccessesPerMonth()
+    {
+        //System.out.println("Month : Count");
+        int total = 0;
+        for(int month = 1; month < monthCounts.length; month++) {
+            //System.out.println(month + ": " + monthCounts[month]);
+            total += monthCounts[month];
+        }
+        total /= (monthCounts.length - 1);
+        System.out.println("The average accesses per month is " + total);
+        
+    }
+    
+    public void busiestMonth()
+    {
+        int max = monthCounts[1];
+        int maxmonth = 1;
+        for(int month = 2; month < monthCounts.length; month++) {
+            //System.out.println("Day : " + day + ", Value : " + dayCounts[day]);
+            if(monthCounts[month] > max)
+            {
+                max = monthCounts[month];                
+                maxmonth = month;
+                //System.out.println("Max changed");
+            }
+        }
+        System.out.println("The buisest month is " + maxmonth + " with " + max + " accesses.");
+    }
+    
+    public void quietestMonth()
+    {
+        int min = monthCounts[1];
+        System.out.println("Min : " + min);
+        int minmonth = 1;
+        for(int month = 2; month < monthCounts.length; month++) {
+            System.out.println("Month : " + month + ", Value : " + monthCounts[month]);
+            if(monthCounts[month] < min)
+            {
+                min = monthCounts[month];                
+                minmonth = month;
+                System.out.println("Max changed");
+            }
+        }
+        System.out.println("The buisest month is " + minmonth + " with " + min + " accesses.");
     }
 
     /**
